@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""A command-line calculator supporting addition and subtraction only."""
+"""A command-line calculator supporting basic arithmetic operations."""
 
 from __future__ import annotations
 
 import sys
-from numbers import Real
 
 
 def calculate(first: float, operator: str, second: float) -> float:
@@ -13,7 +12,11 @@ def calculate(first: float, operator: str, second: float) -> float:
         return first + second
     if operator == "-":
         return first - second
-    raise ValueError("operator must be '+' or '-'")
+    if operator == "*":
+        return first * second
+    if operator == "/":
+        return first / second
+    raise ValueError("operator must be '+', '-', '*', or '/'")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -35,7 +38,7 @@ def main(argv: list[str] | None = None) -> int:
         first = float(first_text)
         second = float(second_text)
         result = calculate(first, operator, second)
-    except ValueError as error:
+    except (ValueError, ZeroDivisionError) as error:
         print(f"Error: {error}", file=sys.stderr)
         return 2
 
